@@ -1,0 +1,1 @@
+conversation_id,log_id,response_timestamp,request_input,response_text,response_branch_exited,response_branch_exited_reason,node_visited,Date
