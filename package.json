@@ -22,8 +22,8 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "markdown-to-html": "0.0.13",
+  "dependencies": {},
+  "devDependencies": {
     "uglify-es": "^3.3.9"
   }
 }
