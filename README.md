@@ -1,3 +1,7 @@
+```diff
+- NOTE: this repository is in the process of being published (DRAFT).  Please come back in a few days
+```
+
 # Watson Assistant Dialog Flow Analysis
 
 > Note: help us stay in touch and improve this notebook by clicking on the :star: star icon (top right).
