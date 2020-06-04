@@ -1,0 +1,45 @@
+/**
+ * (C) Copyright IBM Corp. 2019, 2020.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.botvis.wordpackchart {
+  padding: 0px;
+}
+
+.botvis.wordpackchart circle.group {
+  fill: #ccc;
+  /* opacity: 0.3; */
+  stroke: white;
+}
+
+.botvis.wordpackchart circle.group:hover {
+  fill: orange;
+}
+
+.botvis.wordpackchart text.word {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  fill: black;
+  /* font-size: 16px; */
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.botvis.wordpackchart text.wordcount {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  fill: rgb(105, 65, 65);
+  /*font-size: 16px; */
+  text-anchor: middle;
+  pointer-events: none;
+}

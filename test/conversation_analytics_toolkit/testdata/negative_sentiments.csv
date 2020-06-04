@@ -1,0 +1,3 @@
+conversation_id,log_id,response_timestamp,request_input,response_text,response_branch_exited,response_branch_exited_reason,node_visited,Date
+0,1,17/09/2018,"very angry",,TRUE,,1,17/09/2018
+0,1,17/09/2018,"you're stupid",,TRUE,,1,17/09/2018

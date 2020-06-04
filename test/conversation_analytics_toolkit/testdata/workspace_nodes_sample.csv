@@ -1,0 +1,6 @@
+,conditions,context,dialog_node,metadata,next_step,output,parent,previous_sibling,title,type
+2,@appliance,,node_1_1469815492101,{},"{'dialog_node': 'node_4_1485218096234', 'behavior': 'jump_to', 'selector': 'condition'}",{},Entry Point For Up Down Commands,node_11_1467233013716,,standard
+4,@amenity:restaurant,{'reprompt': True},node_10_1467233806357,{},,"{'action': {'restaurant': ''}, 'text': {'values': ['Of course. Do you have a specific cuisine in mind?']}}",node_8_1467233758272,node_3_1489440594933,restaurant,standard
+43,true,,Appliance Increase Decrease Check,{},,{},node_1_1469815492101,node_4_1485218096234,Appliance Increase Decrease Check,standard
+68,"@appliance:music && $appl_action == ""on"" && $musiconoff==""off""",{'reprompt': True},node_6_1469049958082,{},,{'text': {'values': ['Sure thing! Which genre would you prefer? Jazz is my personal favorite.']}},node_2_1467232480480,,Music Appliance Check,standard
+45,"@appliance:volume && $appl_action == ""decrease"" && $volumeonoff == ""on""",,node_13_1486346882654,{},,"{'action': {'volume_down': ''}, 'text': {'values': [""I've turned down the @appliance for you.""]}}",Appliance Increase Decrease Check,node_12_1486346698626,,response_condition
