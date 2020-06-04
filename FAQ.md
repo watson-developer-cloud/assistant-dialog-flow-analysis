@@ -30,7 +30,7 @@ Some visual components provide an optional user interface to modify the configur
 <a id="canonical-data-model"></a>
 ### What is the format of the canonical data model
 
-![etl.png](./images/etl.png)
+![etl.png](./notebooks/images/etl.png)
 
 During the load-extract-transform step, relevant fields are extracted and transformed from the logs, and additional fields are combined and enriched from the workspace files to faciliate exploration, analysis and visualization.  The canonical data model for analytics is a data interface for the features demonstrated in this notebook. It includes the following columns: 
 
@@ -57,7 +57,7 @@ During the load-extract-transform step, relevant fields are extracted and transf
 
 <a id="logs-skill-enrichment"></a>
 ### How is information from the logs and skills combined
-![etl.png](./images/enrich.png)
+![etl.png](./notebooks/images/enrich.png)
 
 The `workspace_id` field in the logs is used to match data in the logs, with data of the corresponding skill.  In case your logs contain a different field to match than the workspace_id (e.g. `skill name`), you can configure the extract-transform phase to use that column by setting the `skill_id_field` parameter of `to_canonical_WA_v2`
 
