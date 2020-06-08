@@ -82,10 +82,34 @@ This will start the Jupyter server and will open the browser at the Jupyter clie
 ## release
 Under construction
 ### 1. update latest version of Release Candidate notebook
-- make a copy of MASTER notebook, save as `Dialog Flow Analysis Notebook(RC)`
-- remove the "for developers" cell
-- remove section 2.0 from TOC
-- remove section 2.0 
+- make a copy of MASTER notebook(Master), save as `Dialog Flow Analysis Notebook(RC)`
+- remove the development cells:  
+    - remove section 2.0 from TOC
+    - remove section 2.0 
 - test it
 - export standalone-demo.html
 - Cleanup all outputs and save the notebook
+### 2. Run the full build
+```
+npm run build
+```
+### 3. Sync with assistant-dialog-flow-analysis repo (local)  
+in `assistant-dialog-flow-analysis git:(master)` run
+```
+git pull
+git checkout -b "<feature>"
+```
+from `conversation-analytics-toolkit` run
+```
+./sync-repos.sh
+```
+in `assistant-dialog-flow-analysis git:(master)` run
+```
+git add .
+git commit -m "<comment>"
+```
+### 4. Create a PR against remote repo.
+```
+git push -u origin <feature>
+```
+from github.com, create a PR and merge.
