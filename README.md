@@ -1,7 +1,3 @@
-```diff
-- NOTE: this repository is in the process of being published (DRAFT).  Please come back in a few days
-```
-
 # Watson Assistant Dialog Flow Analysis
 
 > Note: help us stay in touch and improve this notebook by clicking on the :star: star icon (top right).
@@ -39,14 +35,30 @@ This notebook extends the [Measure and Analyze notebooks](https://github.com/wat
 The notebook requires a Jupyter Notebook environment and Python 3.6+.   You can either install Jupyter Notebook to run locally or you can use Watson Studio on the cloud.
 
 ### Using Jupyter Notebook
-1. install Python 3.6+
-2. install Jupyter notebook. Checkout the [Jupyter/IPython Notebook Quick Start Guide](https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/install.html) for more details
-3. Download the `Dialog Flow Analysis Notebook.ipynb` file.   
+1. Install Python 3.6+
+2. Install Jupyter notebook. Checkout the [Jupyter/IPython Notebook Quick Start Guide](https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/install.html) for more details
+3. Download the `notebooks/Dialog Flow Analysis Notebook.ipynb` file.   
 4. Start jupyter server `jupyter notebook`
 5. Run the `Dialog Flow Analysis Notebook.ipynb`
 
 ### Using Watson Studio
-under construction...
+1. Create a new custom runtime environment.  Select Python 3.6+ as the base.  In the customization section pane, update the list of dependencies as defined in [requirements.txt](./requirements.txt).
+```
+dependencies:
+  - pip:
+    - pandas~=0.24.0
+    - textblob>=0.15.3
+    - scikit-learn>=0.21.3
+    - scipy>=1.3.0
+    - numpy>=1.15.4
+    - requests>=2.18.4
+    - nltk>=3.4.5
+    - ibm-watson>=4.3.0
+    - tqdm>=4.31.1
+    - plotly>=4.5.0
+```
+2. Select `Add to Project`-->`Notebook`.  Choose `From URL` and paste this [url](https://raw.githubusercontent.com/watson-developer-cloud/assistant-dialog-flow-analysis/master/notebooks/Dialog%20Flow%20Analysis%20Notebook.ipynb).  Alternately you can select `From file` and upload the `notebooks/Dialog Flow Analysis Notebook.ipynb` file.
+3. Run the notebook using the newly created runtime environment (note: the first time use of the runtime environment, can take a few minutes to prepare)
 
 ## Guides
 Coming soon...
@@ -61,4 +73,10 @@ This library is licensed under the [Apache 2.0 license](http://www.apache.org/li
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [DEVELOPER.MD](DEVELOPER.MD) for more details on how to contribute
 
 ## Contributor List
-under construction
+
+
+| | | |
+:-------------------------:|:-------------------------:|:-------------------------:|
+<img src="https://avatars3.githubusercontent.com/u/9696082?s=460&u=459ccd11b224e202f41b5309f6ae881c2714e7ab&v=4" alt="Avi Yaeli" width=100/> <br/> <b>[Avi Yaeli](https://github.com/ayaeli)<b> | <img src="https://avatars1.githubusercontent.com/u/13829603?s=400&v=4" alt="Sergey Zeltyn" width=100/> <br/> <b>[Sergey Zeltyn](https://github.com/Sergey-Zeltyn)<b> | <img src="https://avatars0.githubusercontent.com/u/43827532?s=400&u=817665e525cad70970ea6e0319dda98d1f26910d&v=4" alt="Zhe Zhang" width=100/> <br/> <b>[Zhe Zhang](https://github.com/zzhang13)<b> |
+<img src="https://avatars1.githubusercontent.com/u/24845274?s=400&u=ca3e3ab4bb4c0d6e16b984dc4b4a95fffe53a40c&v=4" alt="Eric Wayne" width=100/> <br/> <b>[Eric Wayne](https://github.com/eric-wayne)<b> | <img src="https://avatars0.githubusercontent.com/u/11946512?s=400&u=379d439244faf5202735603dfa23d72dd07bfa0e&v=4" alt="David Boaz" width=100/> <br/> <b>[David Boaz](https://github.com/boazdavid)<b> |
+
