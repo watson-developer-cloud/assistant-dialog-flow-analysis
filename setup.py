@@ -85,16 +85,3 @@ setuptools.setup(
     zip_safe=False,
     platforms='any',
 )
-
-file = open('VERSION', 'w')
-file.write(version)
-file.close()
-
-minor_stable =  _major + '.' + _minor + '.latest'
-shutil.copyfile("./dist/conversation_analytics_toolkit-" + version + "-py2.py3-none-any.whl",
-        "./dist/conversation_analytics_toolkit-" + minor_stable + "-py2.py3-none-any.whl")
-
-print("")
-print("****************************************")
-print("* generated wheel for revision: " + version + " * ")
-print("****************************************")
