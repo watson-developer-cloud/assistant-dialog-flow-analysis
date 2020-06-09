@@ -32,7 +32,7 @@ deploy:
     python: 3.8
     branch: semantic_release_code
 - provider: pypi
-  user: watson-devex
+  user: "$PYPI_USER"
   password: "$PYPI_PASSWORD"
   server: https://test.pypi.org/legacy/
   skip_cleanup: true
