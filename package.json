@@ -1,7 +1,6 @@
 {
   "name": "conversation-analytics-toolkit",
   "version": "1.0.0",
-  "description": "## initial setup update install_requires section in setup.py",
   "main": "index.js",
   "directories": {
     "test": "test"
