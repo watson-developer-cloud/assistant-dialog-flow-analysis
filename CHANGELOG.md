@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.2...v1.0.3) (2020-06-11)
+
+
+### Bug Fixes
+
+* remove invalid description from package.json ([676a927](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/676a927318f2ff6f240f329e2e517c23ae43c063))
+
 ## [1.0.2](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.1...v1.0.2) (2020-06-11)
 
 
