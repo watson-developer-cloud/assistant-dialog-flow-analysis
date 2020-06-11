@@ -1,0 +1,25 @@
+{
+  "name": "conversation-analytics-toolkit",
+  "version": "1.0.0",
+  "description": "## initial setup update install_requires section in setup.py",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "./build.sh",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify_wa_dialog_chart": "./node_modules/uglify-es/bin/uglifyjs src/conversation_analytics_toolkit/wa_dialog_chart.js -c -o src/conversation_analytics_toolkit/wa_dialog_chart.min.js && ./node_modules/uglify-es/bin/uglifyjs src/conversation_analytics_toolkit/wa_model.js -c -o src/conversation_analytics_toolkit/wa_model.min.js && ./node_modules/uglify-es/bin/uglifyjs src/conversation_analytics_toolkit/wa_tree.js -c -o src/conversation_analytics_toolkit/wa_tree.min.js && ./node_modules/uglify-es/bin/uglifyjs src/conversation_analytics_toolkit/wa_node_details.js -c -o src/conversation_analytics_toolkit/wa_node_details.min.js&& uglifycss ./src/conversation_analytics_toolkit/wa_dialog_chart.css > ./src/conversation_analytics_toolkit/wa_dialog_chart.min.css",
+    "minify_wordpackchart": " uglifyjs src/conversation_analytics_toolkit/wordpackchart.js -c -o src/conversation_analytics_toolkit/wordpackchart.min.js && uglifycss ./src/conversation_analytics_toolkit/wordpackchart.css > ./src/conversation_analytics_toolkit/wordpackchart.min.css",
+    "minify_transcript": "uglifyjs src/conversation_analytics_toolkit/transcript.js -c -o src/conversation_analytics_toolkit/transcript.min.js && uglifycss ./src/conversation_analytics_toolkit/transcript.css > ./src/conversation_analytics_toolkit/transcript.min.css",
+    "minify_flowchart": "uglifyjs src/conversation_analytics_toolkit/flowchart2.js -c -o src/conversation_analytics_toolkit/flowchart2.min.js && uglifycss ./src/conversation_analytics_toolkit/flowchart.css > ./src/conversation_analytics_toolkit/flowchart.min.css",
+    "minify": "npm run minify_flowchart && npm run minify_transcript && npm run minify_wordpackchart && npm run minify_wa_dialog_chart",
+    "copy_sync": "rsync -a --exclude-from='copy_sync_exclude.txt' . ../assistant-dialog-flow-analysis"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "uglify-es": "^3.3.9"
+  }
+}
