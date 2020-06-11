@@ -10,34 +10,28 @@ import os
 import setuptools
 import shutil
 
-#first clean the build directory
-shutil.rmtree('./build',ignore_errors=True)
+__version__ = '1.0.25'
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+# Convert README.md to README.rst for pypi
+try:
+    from pypandoc import convert_file
 
-# Meta information
-version = open('VERSION').read().strip()
-dirname = os.path.dirname(__file__)
+    def read_md(f):
+        return convert_file(f, 'rst')
 
-# increment version by revision
-_major, _minor, _revision= version.split('.',3)[:3]
-version = _major + '.' + _minor + '.' + str(int(_revision)+1)
+    # read_md = lambda f: convert(f, 'rst')
+except:
+    print('warning: pypandoc module not found, '
+          'could not convert Markdown to RST')
 
-# Save version and author to __meta__.py
-path = os.path.join(dirname, 'src', 'conversation_analytics_toolkit', '__meta__.py')
-data = '''# Automatically created. Please do not edit.
-__version__ = u'%s'
-
-__author__ = u'Avi Yaeli'
-''' % version
-with open(path, 'wb') as F:
-    F.write(data.encode())
+    def read_md(f):
+        return open(f, 'rb').read().decode(encoding='utf-8')
+    # read_md = lambda f: open(f, 'rb').read().decode(encoding='utf-8')
 
 setuptools.setup(
     # Basic info
     name='conversation_analytics_toolkit',
-    version=version,
+    version=__version__,
     author='IBM Watson',
     author_email='watdevex@us.ibm.com',
     maintainer='Avi Yaeli',
@@ -45,7 +39,7 @@ setuptools.setup(
     url='https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis',
     description='Dialog Flow Analysis Tool for Watson Assistant',
     license='Apache 2.0',
-    long_description=long_description,
+    long_description=read_md('README.md'),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -91,16 +85,3 @@ setuptools.setup(
     zip_safe=False,
     platforms='any',
 )
-
-file = open('VERSION', 'w')
-file.write(version)
-file.close()
-
-minor_stable =  _major + '.' + _minor + '.latest'
-shutil.copyfile("./dist/conversation_analytics_toolkit-" + version + "-py2.py3-none-any.whl",
-        "./dist/conversation_analytics_toolkit-" + minor_stable + "-py2.py3-none-any.whl")
-
-print("")
-print("****************************************")
-print("* generated wheel for revision: " + version + " * ")
-print("****************************************")
