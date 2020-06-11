@@ -10,7 +10,7 @@ import os
 import setuptools
 import shutil
 
-__version__ = '1.0.25'
+__version__ = '1.0.0'
 
 # Convert README.md to README.rst for pypi
 try:
