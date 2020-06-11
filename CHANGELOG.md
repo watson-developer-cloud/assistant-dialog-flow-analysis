@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.0...v1.0.1) (2020-06-11)
+
+
+### Bug Fixes
+
+* update pypi server ([97bf319](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/97bf3190a66a255638c2108315a9bb00e1dd3aef))
+
 # 1.0.0 (2020-06-11)
 
 
