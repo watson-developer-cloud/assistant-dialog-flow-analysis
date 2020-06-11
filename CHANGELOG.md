@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.3...v1.0.4) (2020-06-11)
+
+
+### Bug Fixes
+
+* update setup.py to remove invalid content for PyPi ([9eb0ec2](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/9eb0ec204c37f0b9802fd8dcfb95cf359d9e4cd5))
+
 ## [1.0.3](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.2...v1.0.3) (2020-06-11)
 
 
