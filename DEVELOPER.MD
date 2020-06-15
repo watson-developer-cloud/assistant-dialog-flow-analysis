@@ -89,6 +89,13 @@ Under construction
 - test it
 - export standalone-demo.html
 - Cleanup all outputs and save the notebook
+### 2. update version for Watson Studio
+- make a copy of MASTER notebook(RC), save as `Dialog Flow Analysis Notebook(WS)`
+- change to use !pip install option
+- add 1.4 to TOC, remove 2.4
+- add section 1.4
+- remove section 2.4
+- replace final export
 ### 2. Run the full build
 ```
 npm run build
