@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.4...v1.0.5) (2020-06-15)
+
+
+### Bug Fixes
+
+* pip install on watson studio without a custom environment ([a883c67](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/a883c676a2b294701fe940bb1d503897ee5f3db4))
+
 ## [1.0.4](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.3...v1.0.4) (2020-06-11)
 
 
