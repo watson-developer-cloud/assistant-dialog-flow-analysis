@@ -42,23 +42,7 @@ The notebook requires a Jupyter Notebook environment and Python 3.6+.   You can 
 5. Run the `Dialog Flow Analysis Notebook.ipynb`
 
 ### Using Watson Studio
-1. Create a new custom runtime environment.  Select Python 3.6+ as the base.  In the customization section pane, update the list of dependencies as defined in [requirements.txt](./requirements.txt).
-```
-dependencies:
-  - pip:
-    - pandas~=0.24.0
-    - textblob>=0.15.3
-    - scikit-learn>=0.21.3
-    - scipy>=1.3.0
-    - numpy>=1.15.4
-    - requests>=2.18.4
-    - nltk>=3.4.5
-    - ibm-watson>=4.3.0
-    - tqdm>=4.31.1
-    - plotly>=4.5.0
-```
-2. Select `Add to Project`-->`Notebook`.  Choose `From URL` and paste this [url](https://raw.githubusercontent.com/watson-developer-cloud/assistant-dialog-flow-analysis/master/notebooks/Dialog%20Flow%20Analysis%20Notebook.ipynb).  Alternately you can select `From file` and upload the `notebooks/Dialog Flow Analysis Notebook.ipynb` file.
-3. Run the notebook using the newly created runtime environment (note: the first time use of the runtime environment, can take a few minutes to prepare)
+1. In Watson Studio, select `Add to Project`-->`Notebook`.  Choose `From URL` and paste this [url](https://raw.githubusercontent.com/watson-developer-cloud/assistant-dialog-flow-analysis/master/notebooks/Dialog%20Flow%20Analysis%20Notebook.ipynb).  Alternately you can select `From file` and upload the `notebooks/Dialog Flow Analysis Notebook.ipynb` file.
 
 ## Guides
 Coming soon...
