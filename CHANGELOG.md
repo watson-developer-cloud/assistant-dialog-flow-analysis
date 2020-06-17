@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.5...v1.0.6) (2020-06-17)
+
+
+### Bug Fixes
+
+* highlighted steps in conversation transcript were highlighting the non negative utterances ([f97043c](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/f97043c5b42cb753f93748976c8913bfe3760f21))
+
 ## [1.0.5](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.4...v1.0.5) (2020-06-15)
 
 
