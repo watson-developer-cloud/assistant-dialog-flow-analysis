@@ -18,4 +18,19 @@ Please sign our [Contributor License Agreement (CLA)](https://cla-assistant.io/w
 * **If your contribution is major,** such as a new feature, start by opening an issue first. Others can then weigh in before you commence any work.
 
 ## Submittion Guideline
-under construction
+1. Fork the repo
+2. Create a local branch for your change, e.g. `git checkout -b my-new-feature-branch`
+3. Test your changes
+4. Commit your changes to local branch, e.g. `git commit -m "feat: my new feature"`.  (see instructions below re: commit message)
+5. Push your changes to remote `git push -u origin my-new-feature-branch`
+6. From github, create a PR from your fork to this repo
+
+### Format your commit message to properly document and trigger the semantic release 
+* feat: A new feature
+* fix: A bug fix
+* docs: Documentation only changes
+* style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons etc)
+* refactor: A code change that neither fixes a bug, not adds a feature
+* perf: A code change that improves performance
+* test: Adding missing tests
+* chore: Changes to the build process or auxiliary tools and libraries such as documentation generation
