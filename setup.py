@@ -8,8 +8,20 @@
 
 import setuptools
 import re
+import os
 
 __version__ = '1.0.6'
+
+# Save __version__ and author to __meta__.py
+dirname = os.path.dirname(__file__)
+path = os.path.join(dirname, 'src', 'conversation_analytics_toolkit', '__meta__.py')
+data = '''# Automatically created. Please do not edit.
+__version__ = u'%s'
+__author__ = u'Avi Yaeli'
+''' % __version__
+
+with open(path, 'wb') as F:
+    F.write(data.encode())
 
 # Convert README.md to README.rst for pypi
 try:
