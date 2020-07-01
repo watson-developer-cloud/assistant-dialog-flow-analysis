@@ -37,15 +37,20 @@ The notebook requires a Jupyter Notebook environment and Python 3.6+.   You can 
 ### Using Jupyter Notebook
 1. Install Python 3.6+
 2. Install Jupyter notebook. Checkout the [Jupyter/IPython Notebook Quick Start Guide](https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/install.html) for more details
-3. Download the `notebooks/Dialog Flow Analysis Notebook.ipynb` file.   
+3. Download the [notebooks/Dialog Flow Analysis Notebook.ipynb](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/blob/master/notebooks/Dialog%20Flow%20Analysis%20Notebook.ipynb) file.   
 4. Start jupyter server `jupyter notebook`
 5. Run the `Dialog Flow Analysis Notebook.ipynb`
 
 ### Using Watson Studio
 1. In Watson Studio, select `Add to Project`-->`Notebook`.  Choose `From URL` and paste this [url](https://raw.githubusercontent.com/watson-developer-cloud/assistant-dialog-flow-analysis/master/notebooks/Dialog%20Flow%20Analysis%20Notebook.ipynb).  Alternately you can select `From file` and upload the `notebooks/Dialog Flow Analysis Notebook.ipynb` file.
 
+Alternately, you can import and modify the [sample notebook on Watson Studio Gallery](https://dataplatform.cloud.ibm.com/exchange/public/entry/view/013c690997e27f3a8d9133265327a9e5?context=wdp).
+
+
 ## Guides
-Coming soon...
+* Learn more about the Dialog Flow Analysis in this [blog](https://medium.com/ibm-watson/do-you-know-where-and-why-users-drop-off-the-conversation-6246e99baddc)
+* See a live example output of the notebook on [Watson Studio Gallery](https://dataplatform.cloud.ibm.com/exchange/public/entry/view/013c690997e27f3a8d9133265327a9e5?context=wdp)
+
 
 ## Frequently Asked Questions
 See [FAQ.md](FAQ.md) for frequently asked questions 
