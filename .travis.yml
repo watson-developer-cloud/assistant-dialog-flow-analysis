@@ -11,6 +11,7 @@ before_install:
 install:
 - pip3 install tox-travis
 before_script:
+- python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
 - pip3 install -r requirements.txt
 script:
 - pip3 install -U python-dotenv
