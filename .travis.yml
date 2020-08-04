@@ -3,15 +3,14 @@ python:
 - 3.5
 - 3.6
 - 3.7
-- 3.8
 cache: pip
 before_install:
-- python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
+#- python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
 - npm install npm@latest -g
 install:
 - pip3 install tox-travis
 before_script:
-- python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
+#- python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
 - pip3 install -r requirements.txt
 script:
 - pip3 install -U python-dotenv
@@ -30,7 +29,7 @@ deploy:
   script: npx semantic-release
   skip_cleanup: true
   on:
-    python: 3.8
+    python: 3.7
     branch: master
 - provider: pypi
   user: "$PYPI_USER"
@@ -38,5 +37,5 @@ deploy:
   server: https://upload.pypi.org/legacy/
   skip_cleanup: true
   on:
-    python: 3.8
+    python: 3.7
     tags: true
