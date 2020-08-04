@@ -16,7 +16,6 @@ __pycache__/
 .idea/
 .project/
 .tox/
-.DS_Store
 
 # Build directories
 docs/_build/
@@ -35,12 +34,3 @@ GITIGNORE-FOLDER/
 
 .vscode/
 .VSCodeCounter/
-
-# Unit test / coverage reports
-htmlcov/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*,cover
