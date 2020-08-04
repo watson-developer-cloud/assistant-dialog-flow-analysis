@@ -4,6 +4,7 @@
 - **Usage**
   - [KeyError during to_canonical_WA_v2](#key-error-to-canonical)
   - [How can I enable interactive ipywidgets](#enable-ipywidgets)
+  - [Why does nodes_visited_str	field contains only question marks](#nodesvisited-question-marks)
 
 - **Data Integration**
   - [What is the format of the canonical data model](#canonical-data-model)
@@ -24,6 +25,13 @@ The enrichment step failed becuase the data contains a reference to a `workspace
 
 Some visual components provide an optional user interface to modify the configuration of the component.   You can call `conversation_analytics_toolkit.enable_widgets()` to enable the use of ipywidgets.  **Note**: ipywidgets require an additional installation step in your Jupyter environment.  For more detail refer to [ipywidgets installation guide](https://ipywidgets.readthedocs.io/en/latest/user_install.html)
 
+<a id="nodesvisited-question-marks"></a>
+### Why does nodes_visited_str	field contains only question marks
+
+The extract-transform phase matches information based on the value of the skill_id field.
+ enrichment of data from the skill matches information from the logs on the skill-id 
+Some visual components provide an optional user interface to modify the configuration of the component.   You can call `conversation_analytics_toolkit.enable_widgets()` to enable the use of ipywidgets.  **Note**: ipywidgets require an additional installation step in your Jupyter environment.  For more detail refer to [ipywidgets installation guide](https://ipywidgets.readthedocs.io/en/latest/user_install.html)
+ 
 
 
 ## Data Integration

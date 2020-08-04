@@ -114,7 +114,7 @@ class WA_Assistant_Skills:
             'name': skill["name"], 
             'description': skill["description"] if "description" in skill else "", 
             'metadata': skill['metadata'], 
-            'workspace_id': skill["workspace_id"],
+            'workspace_id': skill["workspace_id"] if "workspace_id" in skill else "",
             'num_of_intents': len(skill["intents"]),
             'num_of_entities': len(skill["entities"]),
             'num_of_dialog_nodes': len(skill["dialog_nodes"]),
