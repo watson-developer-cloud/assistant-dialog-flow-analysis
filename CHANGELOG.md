@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.8...v1.0.9) (2020-08-06)
+
+
+### Bug Fixes
+
+* updated pandas dependency to support Python3.8.5 + pandas0.25.3 environments ([0fbfaff](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/0fbfaffb3d311b8b500c77dc973872dc6a84a58e))
+
 ## [1.0.8](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.7...v1.0.8) (2020-08-04)
 
 
