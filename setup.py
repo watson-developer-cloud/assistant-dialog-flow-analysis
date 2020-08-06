@@ -65,7 +65,7 @@ setuptools.setup(
     package_dir={'': 'src'},
     packages=setuptools.find_packages('src'),
     install_requires=[
-        'pandas~=0.24.0',
+        'pandas>=0.24.0,<1.0.0',
         'nltk>=3.4.0',
         'textblob>=0.15.3',
         'scikit-learn>=0.21.3',
