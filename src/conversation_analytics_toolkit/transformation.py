@@ -232,7 +232,7 @@ def is_intent_triggered(row, wa_skills, errors, match_from_any_skill=False):
             break
     return result
 
-def to_canonical_WA_v2(df, wa_skills=None, skill_id_field=None, include_nodes_visited_str_types=False):
+def to_canonical_WA_v2(df, wa_skills=None, skill_id_field=None, include_nodes_visited_str_types=False, include_context=False):
     """
     Transform WA log format into pathflow dataframe canonical data model
 
@@ -314,6 +314,12 @@ def to_canonical_WA_v2(df, wa_skills=None, skill_id_field=None, include_nodes_vi
     #if in_place == True:
     #    df5 = df4[cols]
     #else:
+
+
+    if include_context:
+        cols_context = [col for col in df4.columns.values if col.startswith('response_context') and col not in cols]
+        cols += cols_context
+
     df5 = df4[cols].copy(deep=True)
     
     if skill_id_field != None:
