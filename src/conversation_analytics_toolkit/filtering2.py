@@ -232,3 +232,38 @@ class ChainFilter():
         duration_sec = int(later - now)
         self._append_filter(filtered_df, "by_date_range (" + str(start_date) + ", " + str(end_date) + ")", duration_sec)
         return self
+
+    def by_column_values(self, column_name, values):
+        """
+        filters conversations that include values (str or list) in a given column in any of their conversation steps.
+        """
+        now = time.time()
+        filtered_df = self.df
+        if column_name not in filtered_df.columns.values:
+            raise ValueError(f"{column_name} not in data")
+        unique_col_values = filtered_df[column_name].astype(str).unique()
+        # convert numeric to string
+        if isinstance(values, (int, float, complex)):
+            values = str(values)
+
+        # process values = single value
+        if isinstance(values, str):
+            if values not in unique_col_values:
+                raise ValueError(f"value {values} provided is not in {column_name}")
+            rows = filtered_df.loc[filtered_df[column_name].astype(str) == values, :]
+        elif isinstance(values, (list, tuple)):
+            values_column_diff = set(values).difference(set(unique_col_values))
+            if len(values_column_diff) > 0:
+                print(f"WARNING: values {values_column_diff} are not in {column_name}")
+            rows = filtered_df.loc[filtered_df[column_name].astype(str).isin(values)]
+        else:
+            raise ValueError("values must be type numeric/string (single value), or list/tuple (multiple values).")
+
+        # find conversation ids
+        unique_conversations = rows["conversation_id"].unique()
+        # filter by conversation
+        filtered_df = filtered_df[filtered_df.apply(lambda x: x["conversation_id"] in unique_conversations, axis=1)]
+        later = time.time()
+        duration_sec = int(later - now)
+        self._append_filter(filtered_df, "by_column_values (" + column_name + ': ' + str(values) + ")", duration_sec)
+        return self
