@@ -87,6 +87,23 @@ class ChainFilter():
         self._append_filter(filtered_df, "by_dialog_node_id (" + dialog_node_id + ")", duration_sec)
         return self
 
+    def by_dialog_not_node_id(self, dialog_node_id):
+        """
+        filters conversations that do not include node_id in nodes_visited list
+        """
+        now = time.time()
+        filtered_df = self.df
+        #find which rows include the dialog node
+        rows = filtered_df[filtered_df.apply(lambda x: dialog_node_id in x["nodes_visited"], axis=1)]
+        #find their conversation_id
+        unique_conversations = rows["conversation_id"].unique()  
+        #filter by conversation
+        filtered_df = filtered_df[filtered_df.apply(lambda x: x["conversation_id"] not in unique_conversations, axis=1)]
+        later = time.time()
+        duration_sec = int(later - now)
+        self._append_filter(filtered_df, "by_dialog_node_id (" + dialog_node_id + ")", duration_sec)
+        return self
+
     def by_dialog_node_str(self, dialog_node_str):
         """
         filters conversations that include a node string (title/condition) value in the nodes_visited_str list
