@@ -28,6 +28,7 @@ define('wa_tree', [ 'wa_model', 'd3' ], function ({ Workspace, EventPublisher },
       this._treeDom = d3.select(treeDom).classed("wa_tree", true);
       this._settings = settings;
       this._ws = undefined;
+      this._visits = undefined;
       this._convs = undefined;
       this._selectedNode = undefined;
       this._visitsByNodeId = undefined;
@@ -63,8 +64,9 @@ define('wa_tree', [ 'wa_model', 'd3' ], function ({ Workspace, EventPublisher },
         this.scrollToNode(visitedNodeIds[ 0 ]);
       }
     }
-    showWSTree (ws) {
+    showWSTree (ws, visits) {
       this._ws = ws;
+      this._visits = visits;
       this._treeDom.classed('visits', false);
       this.renderNodes();
       this.collapseAll();
@@ -246,6 +248,8 @@ define('wa_tree', [ 'wa_model', 'd3' ], function ({ Workspace, EventPublisher },
       this.createConditionElem(nodeContent);
       this.createOutputElem(nodeContent);
       this.createBottomElem(nodeContent);
+      if (this._visits != null)
+        this.createStatsElem(nodeContent);
     }
     createBottomElem(nodeContent) {
       const bottom = nodeContent.append("div")
@@ -280,8 +284,26 @@ define('wa_tree', [ 'wa_model', 'd3' ], function ({ Workspace, EventPublisher },
         .text(d => d.nextStep.dialog_node);
       jumpTo.append('span')
         .text(d => d.nextStep.selector);
+
       return bottom;
     }
+
+    createStatsElem(nodeContent){
+      //debugger;
+      const stats = nodeContent.append("div")
+        .classed("node__stats", true)
+        .text("visits: ");
+      stats
+        // .filter(d => !d.nextStep)
+        .append("div")
+        .attr("class", "stats")
+        .text(d => {
+          //debugger;
+          return this._visits.nodeVisits(d.id);
+        })
+      return stats
+    }
+
     createOutputElem(nodeContent){
       return nodeContent
         // .filter(d => !d.nextStep)

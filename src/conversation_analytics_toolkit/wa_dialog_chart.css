@@ -326,3 +326,19 @@
   .node_details .entry .value>* {
     margin: 0 0.2em;
   }
+
+  .wa_tree .node__stats {
+    text-align: right;
+    top: -70px;
+    justify-content: center;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .wa_tree .stats {
+    border-radius: 16px;
+    background-color: lightblue;
+    color: black;
+    margin: 0px 3px 0px 3px;
+    display: inline-flex;
+  }

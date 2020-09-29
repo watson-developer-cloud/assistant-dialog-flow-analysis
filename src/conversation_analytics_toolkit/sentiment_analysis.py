@@ -19,7 +19,7 @@ import re
 ########################################################################
 def add_sentiment_columns(df_logs_canonical):
     df_logs_canonical['sentiment_result']=\
-        [utterance_sentiment_detailed(user_input) for user_input in df_logs_canonical['request_text']]
+        [utterance_sentiment_detailed(str(user_input)) for user_input in df_logs_canonical['request_text']]
     
     df_logs_canonical['sentiment']=df_logs_canonical['sentiment_result'].str[0]        
     df_logs_canonical['sentiment_positive_part']=df_logs_canonical['sentiment_result'].str[1]  

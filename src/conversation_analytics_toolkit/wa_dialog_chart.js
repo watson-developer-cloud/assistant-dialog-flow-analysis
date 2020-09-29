@@ -16,8 +16,12 @@
 
 require.undef('wa_dialog_chart');
 define('wa_dialog_chart', [ 'wa_model', 'wa_tree', 'wa_node_details', 'd3' ], function (wa_model, Tree, NodeDetails, d3) {
-  function draw (container, config, { workspace: wsJson }) {
-    const ws = new wa_model.Workspace(wsJson);
+  function draw (container, config, data) {
+    //debugger;
+    let visits = null;
+    if ("visits" in data)
+      visits = new wa_model.Visits(JSON.parse(data.visits));
+    const ws = new wa_model.Workspace(data.workspace);
     const state = {
       search: {
         foundNodeIds: [],
@@ -78,7 +82,7 @@ define('wa_dialog_chart', [ 'wa_model', 'wa_tree', 'wa_node_details', 'd3' ], fu
     // tree.on(Tree.EVENT_TURNS_CLICKED, (ts, node) => console.log(ts.length));
     addSearch(search_div, tree);
 
-    tree.showWSTree(ws);
+    tree.showWSTree(ws, visits);
 
     function addSearch (container, tree) {
       container.append('label')
