@@ -286,18 +286,24 @@ def plot_flow_outcomes(df_flow_outcome_summary):
     data = np.zeros([num_flows,3])    
     
     for i in range(0, num_flows):
-        data[i,0] = (flow_outcome_summary[flow_names[i]]["completed"] / flow_outcome_summary[flow_names[i]]["overall"]) * 100.0
-        data[i,1] = (flow_outcome_summary[flow_names[i]]["rerouted"] / flow_outcome_summary[flow_names[i]]["overall"]) * 100.0
-        data[i,2] = (flow_outcome_summary[flow_names[i]]["abandoned"] / flow_outcome_summary[flow_names[i]]["overall"]) * 100.0
-        
+        if flow_outcome_summary[flow_names[i]]["overall"]>0:
+            data[i,0] = (flow_outcome_summary[flow_names[i]]["completed"] / flow_outcome_summary[flow_names[i]]["overall"]) * 100.0
+            data[i,1] = (flow_outcome_summary[flow_names[i]]["rerouted"] / flow_outcome_summary[flow_names[i]]["overall"]) * 100.0
+            data[i,2] = (flow_outcome_summary[flow_names[i]]["abandoned"] / flow_outcome_summary[flow_names[i]]["overall"]) * 100.0
+        else:   
+            data[i,0] = 0
+            data[i,1] = 0
+            data[i,2] = 0 
+            
     data_cum = data.cumsum(axis=1)
 
     alpha = 0.7
     category_colors = [(0.102, 0.596, 0.314,alpha),(0.878, 0.878, 0.878, alpha),(0.843, 0.188, 0.152, alpha)]
-    fig, ax = plt.subplots(figsize=(12, 2))
+    fig, ax = plt.subplots(figsize=(12, min(10,num_flows)))
     ax.invert_yaxis()
     #ax.xaxis.set_visible(False)
-    ax.set_xlim(0, np.sum(data, axis=1).max())
+    #ax.set_xlim(0, np.sum(data, axis=1).max())
+    ax.set_xlim(0, 100)
     
     for i, (colname, color) in enumerate(zip(category_names, category_colors)):
         widths = data[:, i]
@@ -309,9 +315,10 @@ def plot_flow_outcomes(df_flow_outcome_summary):
  
         text_color = 'black'
         for y, (x, c) in enumerate(zip(xcenters, widths)):
-            ax.text(x, y, str(int(c))+ "%", ha='center', va='center',
-                    color=text_color, fontsize='large')
-    
+            if c>0:
+                ax.text(x, y, str(int(c))+ "%", ha='center', va='center',
+                        color=text_color, fontsize='large')
+        
     ax.set_xlabel("Percentage", fontsize="large")
     ax.set_yticklabels(labels, fontsize="large")
      
