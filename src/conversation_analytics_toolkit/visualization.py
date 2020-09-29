@@ -137,6 +137,9 @@ def draw_wa_dialog_chart(config, json_data, width=600, height=400):
         (function(element){
             require(['wa_dialog_chart'], function(wa_dialog_chart) {
                 var config = %s;
+                if (config["debugger"]===true){
+                   debugger;
+                };
                 var chart = wa_dialog_chart(element.get(0), config, %s);
             });
         })(element);

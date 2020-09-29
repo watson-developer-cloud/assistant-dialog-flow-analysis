@@ -154,6 +154,18 @@ define('wa_model', [], function () {
     }
   }
 
+  class Visits {
+    constructor (visits) {
+      this._visits = visits;
+    }
+    nodeVisits (node_id) {
+      if (!(node_id in this._visits))
+        return "*";
+      else
+        return this._visits[node_id].visits;
+    }
+  }
+
   class Conversation {
     constructor (wsId, convId, turns) {
       this._convId = convId;
@@ -331,6 +343,7 @@ define('wa_model', [], function () {
 
   return {
     Workspace,
+    Visits, 
     Conversation,
     Turn: AYTurn,
     EventPublisher
