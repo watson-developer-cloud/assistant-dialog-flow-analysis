@@ -19,6 +19,7 @@ import json
 import conversation_analytics_toolkit as cat
 from pandas.io.json import json_normalize
 
+
 class _conversationPathAnalysis:
     def __init__(self, mode, on_column, max_depth, trim_reroutes):
         self.mode = mode
