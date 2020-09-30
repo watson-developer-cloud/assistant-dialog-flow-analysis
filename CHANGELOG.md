@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.1.0...v1.1.1) (2020-09-30)
+
+
+### Bug Fixes
+
+* new release fix ([#22](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/issues/22)) ([bd210a9](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/bd210a925f0c4b68a06c6948af5bcb7d408827a5))
+
 # [1.1.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.0.9...v1.1.0) (2020-09-07)
 
 
