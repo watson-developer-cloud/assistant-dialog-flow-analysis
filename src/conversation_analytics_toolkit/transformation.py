@@ -82,12 +82,20 @@ def to_canonical_WA(df, nodes_dict):
         else:
             df4 = df3
 
+        #handling cases where logs do not contain these fields.
+        if 'response_context_system_branch_exited' not in df4.columns:
+            df4['response_context_system_branch_exited'] = ""
+        if 'response_context_system_branch_exited_reason' not in df4.columns:
+            df4['response_context_system_branch_exited_reason'] = ""
+
         cols = ['response_context_conversation_id', 'log_id' ,'response_timestamp', 
                 'request_input', 'response_output_text' ,'response_output_nodes_visited', 
                 'response_context_system_branch_exited', 'response_context_system_branch_exited_reason','response_intents'
                 #,'response_output_generic_response_type']
                 ]
         df5 = df4[cols].copy(deep=True)
+
+            
         df5.rename(columns={'response_output_nodes_visited': 'nodes_visited',
                         'response_context_conversation_id': 'conversation_id',
                         'request_input' : 'request_text',
@@ -296,6 +304,13 @@ def to_canonical_WA_v2(df, wa_skills=None, skill_id_field=None, include_nodes_vi
         pd.DataFrame(df3['response_output_generic'].tolist()).add_prefix('response_output_generic_')], axis=1)
     else:
         df4 = df3
+
+    #handling cases where logs do not contain these fields.
+    if 'response_context_system_branch_exited' not in df4.columns:
+        df4['response_context_system_branch_exited'] = ""
+    if 'response_context_system_branch_exited_reason' not in df4.columns:
+        df4['response_context_system_branch_exited_reason'] = ""
+            
     #TODO: consider to extract response_output_action too
 
     if skill_id_field != None:
