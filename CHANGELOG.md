@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.1.1...v1.1.2) (2020-10-13)
+
+
+### Bug Fixes
+
+* parsing error when branch_exited is missing from payload ([1ba44ef](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/1ba44ef73445cc9519a6692d09f855ec0560b8b5))
+
 ## [1.1.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.1.0...v1.1.1) (2020-09-30)
 
 
