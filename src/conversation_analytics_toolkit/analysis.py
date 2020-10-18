@@ -407,25 +407,49 @@ def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label",
 
     return pd.concat([df_node_out])[['path','name','type','is_conversation_start','flows','rerouted','dropped_off','conversation_log_ids_rerouted','conversation_log_ids_dropped_off','path_length']]
  
-def _find_consecutive_flow_states(df, column="milestone"):
-    log_ids_to_delete = []
-    for idx, conversation_df in df.groupby(df['conversation_id']):
-        conversation_df = conversation_df.sort_values("response_timestamp")
-        #for each conversation, remove duplicate milestones
-        last_milestone = None
-        for index, row in conversation_df.iterrows():
-            if row[column] != last_milestone:
-                last_milestone = row[column]
-            else:
-                log_ids_to_delete.append(row['log_id'])
-    return log_ids_to_delete
+# def _find_consecutive_flow_states(df, column="milestone"):
+#     log_ids_to_delete = []
+#     for idx, conversation_df in df.groupby(df['conversation_id']):
+#         conversation_df = conversation_df.sort_values("response_timestamp")
+#         #for each conversation, remove duplicate milestones
+#         last_milestone = None
+#         for index, row in conversation_df.iterrows():
+#             if row[column] != last_milestone:
+#                 last_milestone = row[column]
+#             else:
+#                 log_ids_to_delete.append(row['log_id'])
+#     return log_ids_to_delete
 
 def simplify_flow_consecutive_milestones(df):
     """
     remove consecutive milestones from the dataframe, to create a simplified flow visualization.
     """
 
-    rows_to_delete = _find_consecutive_flow_states(df)
-    print("Removed {} duplicate milestone rows".format(str(len(rows_to_delete))))
+    # rows_to_delete = _find_consecutive_flow_states(df)
+    # print("Removed {} duplicate milestone rows".format(str(len(rows_to_delete))))
+    # result = df[~df["log_id"].isin(rows_to_delete)]
+
+    return simplify_consecutive_duplicates(df, on_column="milestone")
+
+def _find_consecutive_duplicates(df, column="milestone"):
+    log_ids_to_delete = []
+    for idx, conversation_df in df.groupby(df['conversation_id']):
+        conversation_df = conversation_df.sort_values("response_timestamp")
+        #for each conversation, remove duplicate 
+        last_value = None
+        for index, row in conversation_df.iterrows():
+            if row[column] != last_value:
+                last_value = row[column]
+            else:
+                log_ids_to_delete.append(row['log_id'])
+    return log_ids_to_delete
+
+def simplify_consecutive_duplicates(df, on_column="milestone"):
+    """
+    remove consecutive turns from the dataframe, to create a simplified flow visualization.
+    """
+
+    rows_to_delete = _find_consecutive_duplicates(df, on_column)
+    print("Removed {} duplicate {} rows".format(str(len(rows_to_delete)), on_column))
     result = df[~df["log_id"].isin(rows_to_delete)]
     return result
