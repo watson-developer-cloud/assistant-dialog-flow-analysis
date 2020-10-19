@@ -47,6 +47,9 @@ if not cat.is_production() and not cat.is_forced_production_mode():
 
     display(Javascript("require.config({paths: {d3: 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min'}});"))
     display(Javascript("require.config({paths: {lodash: 'https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min'}});"))
+
+    display(Javascript(filename=os.path.join(project_folder, "src","conversation_analytics_toolkit", "svg_export.js")))
+
     display(Javascript(filename=os.path.join(project_folder, "src","conversation_analytics_toolkit", "flowchart2.js")))
     display(Javascript(filename=os.path.join(project_folder, "src","conversation_analytics_toolkit", "transcript.js")))
     display(Javascript(filename=os.path.join(project_folder, "src","conversation_analytics_toolkit", "wordpackchart.js")))   
@@ -56,12 +59,14 @@ if not cat.is_production() and not cat.is_forced_production_mode():
     display(Javascript(filename=os.path.join(project_folder, "src", "conversation_analytics_toolkit", "wa_node_details.js")))
     display(Javascript(filename=os.path.join(project_folder, "src", "conversation_analytics_toolkit", "wa_dialog_chart.js")))
 else:
+    svg_export_js = pkgutil.get_data(__package__, 'svg_export.min.js').decode('utf-8')
     flowchart_css = pkgutil.get_data(__package__, 'flowchart.min.css').decode('utf-8')
     flowchart_js = pkgutil.get_data(__package__, 'flowchart2.min.js').decode('utf-8')
     transcript_css = pkgutil.get_data(__package__, 'transcript.min.css').decode('utf-8')
     transcript_js = pkgutil.get_data(__package__, 'transcript.min.js').decode('utf-8')
     wordpackchart_css = pkgutil.get_data(__package__, 'wordpackchart.min.css').decode('utf-8')
     wordpackchart_js = pkgutil.get_data(__package__, 'wordpackchart.min.js').decode('utf-8')
+    
 
     wa_model_js = pkgutil.get_data(__package__, 'wa_model.min.js').decode('utf-8')
     wa_tree_js = pkgutil.get_data(__package__, 'wa_tree.min.js').decode('utf-8')

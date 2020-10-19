@@ -16,7 +16,7 @@
 
 require.undef('flowchart2');
 
-define('flowchart2', ['d3'], function (d3) {
+define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
  //debugger;
 
  function draw(container, config, data){
@@ -69,6 +69,7 @@ define('flowchart2', ['d3'], function (d3) {
     _chart.selectedD3Node = null;
     createInfoDiv(_chart);
     createTitleDiv(_chart);
+    createButtonDiv(_chart);
 
       // Set the dimensions and margins of the diagram
       var margin = _config.margin,
@@ -661,6 +662,20 @@ define('flowchart2', ['d3'], function (d3) {
         $('<div>', {text: 'Drop offs: '}).addClass("infodiv-node-dropoffs").appendTo(infodiv);
         $('<div>', {text: 'Reroutes: '}).addClass("infodiv-node-reroutes").appendTo(infodiv);
       
+      }
+
+      function saveSVGtoPNG(_chart) {
+        svgExport(_chart.svg.node(), "file.png");
+      }
+
+      function createButtonDiv(_chart) {
+        var buttonDiv = $('<div>').addClass("botvis buttondiv").appendTo(_chart.container);
+        $('<button>', {text:'Export Image'}).addClass("export-button").appendTo(buttonDiv).click(function() {
+            return function() {
+              saveSVGtoPNG(_chart); 
+            }
+          }()
+        )
       }
 
       function createTitleDiv(_chart) {

@@ -53,6 +53,12 @@ div .botvis.flowchart {
   font-size: larger;
 }
 
+.botvis.buttondiv {
+  position: absolute;
+  right: 30px;
+  top: 18px;
+}
+
 .botvis.infodiv .field-name {
   font-weight: bold;
 }
