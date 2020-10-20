@@ -82,6 +82,7 @@ else:
     
     display(Javascript("require.config({paths: {d3: 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min'}});"))
     display(Javascript("require.config({paths: {lodash: 'https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min'}});"))
+    display(Javascript(data=svg_export_js))
     display(Javascript(data=flowchart_js))
     display(Javascript(data=transcript_js))
     display(Javascript(data=wordpackchart_js))
