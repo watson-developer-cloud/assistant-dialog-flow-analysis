@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.2.0...v1.2.1) (2020-10-20)
+
+
+### Bug Fixes
+
+* svg_export button not loading ([bba7271](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/bba7271efd8788ac23b35518003aff4d44a1b6e2))
+
 # [1.2.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.1.2...v1.2.0) (2020-10-19)
 
 
