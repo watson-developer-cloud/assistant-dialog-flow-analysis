@@ -198,3 +198,14 @@ div .botvis.flowchart {
 .botvis-ba-label {
   color: white;
 }
+
+.output_subarea.fullscreen {
+  z-index: 9999 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: white !important;
+  opacity: 1 !important;
+  position: fixed !important;
+  top: 50px !important;
+  left: 0px !important;
+}

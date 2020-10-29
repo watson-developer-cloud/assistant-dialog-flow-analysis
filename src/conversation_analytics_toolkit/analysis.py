@@ -377,7 +377,7 @@ def compute_flows(df, config):
 
     return pd.concat([df_node_out])[['path','name','type','is_conversation_start','flows','rerouted','dropped_off','conversation_log_ids_rerouted','conversation_log_ids_dropped_off','path_length']]
 
-def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label", trim_reroutes=False ):
+def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label", trim_reroutes=False, reverse=False ):
     """
     compute aggregated flows across nodes and corresponding statistics, such as number of dropoffs
     returns results as a df for visualization
@@ -398,7 +398,7 @@ def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label",
 
     analysis = _conversationPathAnalysis(mode, on_column, max_depth, trim_reroutes)
     for idx, conversation_df in df.groupby(df['conversation_id']):
-        conversation_df = conversation_df.sort_values("response_timestamp")
+        conversation_df = conversation_df.sort_values("response_timestamp", ascending=not reverse)
         analysis.handle_conversation_path(conversation_df)
 
     df_node_out = pd.DataFrame.from_dict(analysis.nodes_paths, orient="index")
@@ -419,6 +419,57 @@ def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label",
 #             else:
 #                 log_ids_to_delete.append(row['log_id'])
 #     return log_ids_to_delete
+
+
+def merge_compare_flows(curr, last):
+    def update_curr_rows(df, mask):
+        #all fields in current exists, only update the previous
+        df.loc[mask,'flows_prev'] = 0
+        df.loc[mask,'rerouted_prev'] = 0
+        df.loc[mask,'dropped_off_prev'] = 0    
+        df.loc[mask,'flow_in_curr_only'] = True
+    
+    def update_prev_rows(df, mask):
+        #copy fields from prev, set current flows to zeros   
+        df.loc[mask,'name'] = df[mask]['name_prev']
+        df.loc[mask,'type'] = df[mask]['type_prev']
+        df.loc[mask,'is_conversation_start'] = df[mask]['is_conversation_start_prev']
+        df.loc[mask,'flows'] = 0
+        df.loc[mask,'rerouted'] = 0
+        df.loc[mask,'dropped_off'] = 0
+        df['empty_arr'] = [[]] * len(df)
+        df.loc[mask,'conversation_log_ids_rerouted'] = df[mask]['empty_arr']
+        df.loc[mask,'conversation_log_ids_dropped_off'] = df[mask]['empty_arr']
+        df.drop('empty_arr', axis='columns', inplace=True)
+        df.loc[mask,'path_length'] = df[mask]['path_length_prev']
+        df.loc[mask,'flow_in_prev_only'] = True
+    
+    #outer (union) join which merges on the path column
+    merged = pd.DataFrame.merge(curr, last,
+                        on=['path'],
+                        how='outer', suffixes=('','_prev'))
+    
+    merged["flow_in_prev_only"] = False
+    merged["flow_in_curr_only"] = False
+    curr_rows_only_mask = (merged["name"].notna() & merged["name_prev"].isna())
+    prev_rows_only_mask = (merged["name"].isna() & merged["name_prev"].notna())
+    both_mask = (merged["name"].notna() & merged["name_prev"].notna())
+        
+    # handle each case
+    update_curr_rows(merged, curr_rows_only_mask)
+    update_prev_rows(merged, prev_rows_only_mask)
+    
+    # select the right fields to return
+    columns = ['path', 'name', 'type', 'is_conversation_start', 'flows', 'rerouted',
+       'dropped_off', 'flows_prev', 'rerouted_prev',
+       'dropped_off_prev', 'conversation_log_ids_rerouted',
+       'conversation_log_ids_dropped_off', 'path_length', 'flow_in_curr_only', 'flow_in_prev_only']
+    # reset the index
+    merged.reset_index()
+    print("Merging flows:\nNew flows only in current period:(",curr_rows_only_mask.sum(),\
+          ")\nFlows in both periods:(", both_mask.sum(),\
+          ")\nOld flows not in current period:(", prev_rows_only_mask.sum(),")")
+    return merged[columns]
 
 def simplify_flow_consecutive_milestones(df):
     """

@@ -50,14 +50,18 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
         maxChildrenInNode: 5,
         title: "",
         mode: "turn-based",
+        compareMode: false,
         dataModel : "json_array" // "json" or "csv"
     };
 
     var _container = container;
 
     _config = $.extend(true, defaultConfig, config); // merge the default with the incoming config.
+    if (data[0].flows_prev)
+      _config.compareMode = true;
     var target = Array.isArray(data) ? [] : {};
     _data = $.extend(true, target, data); // make a copy of the data so we can update it
+
 
     _chart.container = _container;
     _chart.config = _config;
@@ -70,6 +74,7 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
     createInfoDiv(_chart);
     createTitleDiv(_chart);
     createButtonDiv(_chart);
+    // createToggleFullScreenButton(_chart);
 
       // Set the dimensions and margins of the diagram
       var margin = _config.margin,
@@ -154,10 +159,15 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
 
             var otherData = {
               dropoffs: 0,
+              prev_dropoffs: 0,
               rerouted: 0,
+              prev_rerouted: 0,
               flowRatio: 0,
-              flowRationFromPrev: 0,
+              flow_prevRatio: 0,
+              flowRatioFromPrev: 0,
+              flow_prevRatioFromPrev: 0,
               flows: 0,
+              prev_flows: 0,
               id: "other",
               is_new_skill: 0,
               is_session_start: 0,
@@ -181,7 +191,7 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
             var num_of_otherChildren = 0;
             otherChildren.forEach(function(node) {num_of_otherChildren += node.data.flows;});
             otherNode.data.flowRatio = otherNode.data.flows / root.data.flows;
-            otherNode.data.flowRationFromPrev = otherNode.parent ? otherNode.data.flows / otherNode.parent.data.flows : otherNode.data.flowRatio ;
+            otherNode.data.flowRatioFromPrev = otherNode.parent ? otherNode.data.flows / otherNode.parent.data.flows : otherNode.data.flowRatio ;
             otherData.name = num_of_otherChildren + " others ...";
 
             topChildren.push(otherNode);
@@ -272,14 +282,22 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
              skillRow = '<p><strong>Skill: </strong>' + d.data.skill + '<br>'
            }
 
+           var compareRow = "";
+           if (_config.compareMode) {
+              compareRow = (_config.compareMode ? 
+              ('<strong>Visits (prev): </strong>' + d.data.flows_prev + " (" + (d.data.trendPercentage*100).toFixed(2) + "%)") :
+              ('<strong>Visits (prev): </strong>  (NA)')) + '<br>' 
+
+            }
 
            _tooltip.html(
                 '<div>' +
                 '<p><strong>' + nodeNameLabel + ': </strong>' + d.data.name +
                 '<br>' +
                 skillRow +
-                '<strong>Visits: </strong>' + d.data.flows + " (" + (d.data.flowRatio*100).toFixed(1) + "% | " + (d.data.flowRationFromPrev*100).toFixed(1) + "%)" +  
+                '<strong>Visits: </strong>' + d.data.flows + " (" + (d.data.flowRatio*100).toFixed(1) + "% | " + (d.data.flowRatioFromPrev*100).toFixed(1) + "%)" +  
                 '<br>' +
+                compareRow + 
                 '<strong>Drop offs: </strong>' + d.data.dropped_off + " (" + (d.data.dropped_offRatio*100).toFixed(1) + '%)' +
                 '<br>' +
                 '<strong>Reroutes: </strong>' + d.data.rerouted + " (" + (d.data.reroutedRatio*100).toFixed(1) + '%)' +
@@ -337,6 +355,32 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
                 return (d.data.is_new_skill == 1)? 1 : 0;
             });
 
+        // add comparison across periods
+        nodeEnter.append('text')
+          .attr('class', 'node-label-new-old-flow')
+          .attr('transform', 'translate(-35, -20)')
+          .text(function(d) {
+              let trend = d.data.trendPercentage
+              if (!trend)
+              return "";
+
+              // let curr = d.data.flows
+              // let prev = d.data.flows_prev
+              // if (!prev)
+              //   return "";
+              // let trend = curr > prev ? (curr - prev) / curr : ( curr - prev ) / prev;
+
+
+              return trend == 0 ? "" : trend > 0 ? "+" + (trend*100).toFixed(2) + " %" : (trend*100).toFixed(2) + " %";
+          })
+          .style("opacity", function(d) {
+              return (_config.compareMode)? 1 : 0;
+          })
+          .style("fill", function(d) {
+              return d.data.trendPercentage > 0 ? "#00b49f" : "#da6363";
+          })
+          ;
+
         // add the node exit path mark
         nodeEnter.append('path')
             .attr('class', 'node-exit-path')
@@ -382,8 +426,8 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
             .text(function(d) {
                 var flows = d.data.flows;
                 var flowsRatio = d.data.flowRatio;
-                var flowRationFromPrev = d.data.flowRationFromPrev;
-                var text =  (_config.showVisitRatio == "fromTotal") ? (flowsRatio*100).toFixed(0) +  "% (" + flows + ")" : (flowRationFromPrev*100).toFixed(0) +  "% (" + flows + ")";
+                var flowRatioFromPrev = d.data.flowRatioFromPrev;
+                var text =  (_config.showVisitRatio == "fromTotal") ? (flowsRatio*100).toFixed(0) +  "% (" + flows + ")" : (flowRatioFromPrev*100).toFixed(0) +  "% (" + flows + ")";
                 return text;
             });
 
@@ -557,7 +601,7 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
               d.children = d._children;
               d._children = null;
             }
-          debugger;
+          //debugger;
           var x = d3.event.pageX;
           var y = d3.event.pageY;
           update(d);
@@ -588,7 +632,7 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
           // transform JSONArray structure into D3 hierarchy, and perform some computation of attributes along the way.  This function will be called by the chart to process the data.
 
           // create the tree structure
-          var rootNode = {path:_config.commonRootPathName, id:_config.commonRootPathName, "name":_config.commonRootPathName, type:"start", is_new_skill:0, is_session_start:0, dropped_off:0, rerouted:0, flows:0, not_handled:0, dropped_offRatio: 0, reroutedRatio: 0, flowRatio: 100, flowRationFromPrev: 100, notHandledRatio: 0 };
+          var rootNode = {path:_config.commonRootPathName, id:_config.commonRootPathName, "name":_config.commonRootPathName, type:"start", is_new_skill:0, is_session_start:0, dropped_off:0, rerouted:0, flows:0, not_handled:0, dropped_offRatio: 0, reroutedRatio: 0, flowRatio: 100, flowRatioFromPrev: 100, notHandledRatio: 0 };
 
           // update path of all elements to have shared session start element
           data.forEach(function(row) {row.path = _config.commonRootPathName + "\\" + row.path});
@@ -612,8 +656,18 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
               node.data.dropped_offRatio = node.data.dropped_off / node.data.flows;
               node.data.reroutedRatio = node.data.rerouted / node.data.flows;
               node.data.flowRatio = node.data.flows / root.data.flows;
-              node.data.flowRationFromPrev = node.parent ? node.data.flows / node.parent.data.flows : node.data.flowRatio;
+              node.data.flowRatioFromPrev = node.parent ? node.data.flows / node.parent.data.flows : node.data.flowRatio;
               node.data.notHandledRatio = node.data.not_handled / node.data.flows;
+              if (_config.compareMode) { // if including previous period
+                node.data.dropped_off_prevRatio = node.data.dropped_off_prev / node.data.flows_prev;
+                node.data.rerouted_prevRatio = node.data.rerouted_prev / node.data.flows_prev;
+                node.data.flow_prevRatio = node.data.flows_prev / root.data.flows_prev;
+                node.data.flow_prevRatioFromPrev = node.parent ? node.data.flows_prev / node.parent.data.flows_prev : node.data.flow_prevRatio;
+                node.data.trendPercentage = node.data.flows > node.data.flows_prev ?
+                    (node.data.flows -  node.data.flows_prev) / node.data.flows  : 
+                    (node.data.flows -  node.data.flows_prev) / node.data.flows_prev;
+               // (node.data.flows / node.data.flows_prev * 100 ) - 100;
+              }
 
           });
           return root;
@@ -624,7 +678,7 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
         var node = _chart.selectedNode; 
         d3.select(_chart.container).select(".infodiv-node-name").html("<span class='field-name'>Node name: </span>" + node.name);
         d3.select(_chart.container).select(".infodiv-node-path").html("<span class='field-name'>Path: </span>" + node.path);
-        d3.select(_chart.container).select(".infodiv-node-visits").html("<span class='field-name'>Visits: </span>" + node.flows + " (" +  (node.flowRatio*100).toFixed(1) + "% of total | " + (node.flowRationFromPrev*100).toFixed(1) + "% of previous)");
+        d3.select(_chart.container).select(".infodiv-node-visits").html("<span class='field-name'>Visits: </span>" + node.flows + " (" +  (node.flowRatio*100).toFixed(1) + "% of total | " + (node.flowRatioFromPrev*100).toFixed(1) + "% of previous)");
         d3.select(_chart.container).select(".infodiv-node-dropoffs").html("<span class='field-name'>Drop offs: </span>" + node.dropped_off + " (" +  (node.dropped_offRatio*100).toFixed(1) + "%)");
         d3.select(_chart.container).select(".infodiv-node-reroutes").html("<span class='field-name'>Reroutes: </span>" + node.rerouted + " (" + (node.reroutedRatio*100).toFixed(1) + "%)");
       }
@@ -677,6 +731,20 @@ define('flowchart2', ['d3', 'svg_export'], function (d3, svgExport) {
           }()
         )
       }
+      
+      // function toggleFullScreen(container) {
+      //   $(container).toggleClass('fullscreen'); 
+      // }
+
+      // function createToggleFullScreenButton(_chart) {
+      //   var buttonDiv = $('<div>').addClass("botvis buttondiv").appendTo(_chart.container);
+      //   $('<button>', {text:'+'}).addClass("toggle-full-screen").appendTo(buttonDiv).click(function() {
+      //       return function() {
+      //         toggleFullScreen(_chart.container); 
+      //       }
+      //     }()
+      //   )
+      // }
 
       function createTitleDiv(_chart) {
         var titleDiv = $('<div>').addClass("botvis titlediv").appendTo(_chart.container);
