@@ -10,7 +10,7 @@ import setuptools
 import re
 import os
 
-__version__ = '1.2.1'
+__version__ = '1.3.0'
 
 # Save __version__ and author to __meta__.py
 dirname = os.path.dirname(__file__)
