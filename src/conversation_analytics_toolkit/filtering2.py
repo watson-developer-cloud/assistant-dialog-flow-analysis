@@ -120,7 +120,7 @@ class ChainFilter():
         duration_sec = int(later - now)
         self._append_filter(filtered_df, "by_dialog_node_str (" + dialog_node_str + ")", duration_sec)
         return self
-    
+
     def by_turn_label(self, label):
         """
         return the rows of conversations that include a value in turn_label
@@ -182,8 +182,19 @@ class ChainFilter():
                     filtered_df = pd.concat([filtered_df,conversation_df.tail(num_of_elements_to_copy)])
                     break
         later = time.time()
-        duration_sec = int(later - now)
+        
         self._append_filter(filtered_df, "trim_from_turn_label (" + turn_label + ")", duration_sec)
+        return self
+
+    def remove_turn_by_label(self, turn_label):
+        """
+        filter and trim steps that include turn label. 
+        """
+        now = time.time()
+        filtered_df = self.df[self.df["turn_label"] != turn_label]
+        later = time.time()
+        duration_sec = int(later - now)
+        self._append_filter(filtered_df, "remove_turn_by_label (" + str(len(self.df) - len(filtered_df)) + ")", duration_sec) 
         return self
 
     def trim_from_node_id(self, node_id):
@@ -207,6 +218,34 @@ class ChainFilter():
                     num_of_elements_to_copy = len(conversation_df)-i+1
                     filtered_df = pd.concat([filtered_df,conversation_df.tail(num_of_elements_to_copy)])
                     break
+        later = time.time()
+        duration_sec = int(later - now)
+        self._append_filter(filtered_df, "trim_from_node_id (" + node_id + ")", duration_sec)
+        return self
+
+    def trim_after_last_node_id(self, node_id):
+        """
+        filter and trim conversations steps after the last step that includes node_id in nodes_visited.
+        """
+        now = time.time()
+     
+        # create an empty dataframe with the same column names and types
+        filtered_df = pd.DataFrame(data=None, columns=self.df.columns)
+        for column in filtered_df.columns:
+            filtered_df[column] = filtered_df[column].astype(self.df[column].dtypes.name)
+        df_by_conversation_id = self.df.groupby(by="conversation_id")
+        for conversation_id, conversation_df in df_by_conversation_id:
+            i=0
+            conversation_df = conversation_df.sort_values(by=["response_timestamp"], ascending=False)
+            for index, row in conversation_df.iterrows():
+                i=i+1
+                nodes_visited = row["nodes_visited"]
+                if node_id in nodes_visited:
+                    num_of_elements_to_copy = len(conversation_df)-i+1
+                    filtered_df = pd.concat([filtered_df,conversation_df.tail(num_of_elements_to_copy)])
+                    break
+        filtered_df.sort_values(by=["response_timestamp"], ascending=True)
+
         later = time.time()
         duration_sec = int(later - now)
         self._append_filter(filtered_df, "trim_from_node_id (" + node_id + ")", duration_sec)
