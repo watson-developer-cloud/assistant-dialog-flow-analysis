@@ -75,27 +75,52 @@ def get_frequent_words_bigrams(utterances, num_unigrams,num_bigrams,custom_stop_
     cv_fit_words=cv_words.fit_transform(utterances)     
     word_list = cv_words.get_feature_names();    
     word_count_list  = cv_fit_words.toarray().sum(axis=0)    
-    words_zip = sorted(zip(word_count_list, word_list),reverse=True)
-    words_zip=words_zip[0:min(len(words_zip), num_unigrams)]
+    words_sorted = sorted(zip(word_count_list, word_list),reverse=True)
+    words_sorted=words_sorted[0:min(len(words_sorted), num_unigrams)]
     
     if bigrams_found:
         cv_bigrams = CountVectorizer(ngram_range=(2,2))
         
         cv_fit_bigrams=cv_bigrams.fit_transform(utterances)     
-        bigram_list = cv_bigrams.get_feature_names();    
+        bigram_list = cv_bigrams.get_feature_names()
+        
+        num_overall_bigrams = len(bigram_list)
+            
         bigram_count_list  = cv_fit_bigrams.toarray().sum(axis=0)    
         bigram_zip = sorted(zip(bigram_count_list, bigram_list),reverse=True)
-        bigram_zip=bigram_zip[0:num_bigrams]
+        
+        counter_bigrams=0
+        counter_merged_bigrams=0
+        bigram_sorted=[]
+        bigram_final_list=[]
+        
+        # merge same order
+        while counter_bigrams < num_overall_bigrams and counter_merged_bigrams < num_bigrams:
+            current_bigram = bigram_zip[counter_bigrams][1] 
+            current_count = bigram_zip[counter_bigrams][0] 
+        
+            S = order_ngram(current_bigram)
+            if S in bigram_sorted:
+                ind = bigram_sorted.index(S) 
+                bigram_final_list[ind][0] += current_count
+                 
+            else:
+                bigram_final_list.append([current_count, current_bigram])
+                bigram_sorted.append(S)
+
+                counter_merged_bigrams += 1
+                
+            counter_bigrams += 1    
         
     else:
         print("Warning! List of bigrams is empty.")
 
     children = []
-    for i in range(0, min(len(words_zip), num_unigrams)):
-        children.append({"name": words_zip[i][1], "value": int(words_zip[i][0])})
+    for i in range(0, min(len(words_sorted), num_unigrams)):
+        children.append({"name": words_sorted[i][1], "value": int(words_sorted[i][0])})
     if bigrams_found:
-        for i in range(0, min(len(bigram_zip), num_bigrams)):
-            children.append({"name": bigram_zip[i][1], "value": int(bigram_zip[i][0])})
+        for i in range(0, min(len(bigram_final_list), num_bigrams)):
+            children.append({"name": bigram_final_list[i][1], "value": int(bigram_final_list[i][0])})
     data = {"name": "","children": children}
 
     return data

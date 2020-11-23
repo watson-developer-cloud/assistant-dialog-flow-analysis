@@ -25,6 +25,7 @@
     "@semantic-release/github": "^7.1.1"
   },
   "devDependencies": {
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "uglifycss": "0.0.29"
   }
 }

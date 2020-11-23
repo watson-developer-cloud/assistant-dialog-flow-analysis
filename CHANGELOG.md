@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.2.1...v1.3.0) (2020-11-01)
+
+
+### Features
+
+* support for reverse flows and trend flows ([0223af4](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/0223af4df18f9a34679e3b89436b4653da3225e6))
+
 ## [1.2.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.2.0...v1.2.1) (2020-10-20)
 
 

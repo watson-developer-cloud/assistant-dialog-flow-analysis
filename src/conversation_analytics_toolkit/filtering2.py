@@ -197,6 +197,17 @@ class ChainFilter():
         self._append_filter(filtered_df, "remove_turn_by_label (" + str(len(self.df) - len(filtered_df)) + ")", duration_sec) 
         return self
 
+    def remove_turn_by_column_value(self, column, value):
+        """
+        filter and trim steps that include turn label. 
+        """
+        now = time.time()
+        filtered_df = self.df[self.df[column] != value]
+        later = time.time()
+        duration_sec = int(later - now)
+        self._append_filter(filtered_df, "remove_turn_by_column_value (" + str(len(self.df) - len(filtered_df)) + ")", duration_sec) 
+        return self
+
     def trim_from_node_id(self, node_id):
         """
         filter and trim conversations steps prior to first step that includes node_id in nodes_visited.
