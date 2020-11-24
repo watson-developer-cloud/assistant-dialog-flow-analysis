@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.3.0...v1.4.0) (2020-11-24)
+
+
+### Features
+
+* removed support for Python 3.5 end of service which doesn't support Pandas 1.1.x ([c5f18d3](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/c5f18d3d312da29d61e84c6d1179c396cbfbbb40))
+* support for pandas 1.1.x. stop support for Python 3.5 ([93862c4](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/93862c4dfdfacdf4dba0421c7f0f35d6e437077d))
+* upgrade to pandas 1.1.x ([d0b0b8d](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/d0b0b8db43a72d7b2b4a69fe73cf017ee1c64eb3))
+
 # [1.3.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.2.1...v1.3.0) (2020-11-01)
 
 
