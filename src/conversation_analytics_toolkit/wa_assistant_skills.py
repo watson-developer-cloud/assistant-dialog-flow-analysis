@@ -120,28 +120,97 @@ class WA_Assistant_Skills:
             'num_of_dialog_nodes': len(skill["dialog_nodes"]),
             }
     
+    def _get_nested_value_in_node(self, node, key):
+        """returns the value a nested key (e.g. context.current_step, output.text.values)
+
+        Parameters:
+        node (Dictionary): The dialog node to search in
+        key (string): The attribute key 
+
+        Returns:
+        None:if the key doesn't exist
+        string: if the value is string
+        string[]: if the value is an array
+        """
+        result = None
+        key_attributes = key.split(".")
+        obj = node
+        for i in range(len(key_attributes)):
+            if not isinstance(obj,dict):
+                # can't drill down into a non dict type
+                obj = None
+                break
+            obj = obj.get(key_attributes[i])
+            if obj == None:
+                # if attribute is missing, then break out of the loop and result will be None
+                break
+        if isinstance(obj,dict):
+            # final object must be a primitive or list
+            result = None
+        else:
+            result = obj
+        return result
+
     def re_search_in_dialog_nodes(self, regex_str, keys=["title", "conditions", "dialog_node"], in_skill=None):
         """Find regular expression case insensitive search in nodes across the skills
         """
-
         results=[]
+        columns=["skill_id", "dialog_node", "type", "title", "conditions", "matched_in","matched_location"]
         for skill_id in self._skills:
             if in_skill != None:
                 if skill_id != in_skill:
                     continue 
             for node in self._skills[skill_id]["dialog_nodes"]:
                 for key in keys:
-                    if key in node.keys():
+                    if key not in columns:
+                        columns.append(key)
+                    value = self._get_nested_value_in_node(node, key)
+                    #if key in node.keys():
+                    if value != None:
                         #print (node[key])
-                        match = re.search(regex_str, node[key], re.IGNORECASE)
+                        #match = re.search(regex_str, node[key], re.IGNORECASE)
+                        match = re.search(regex_str, value, re.IGNORECASE)
                         if match:
-                            result = node.copy()
+                            #result = node.copy()
+                            result = {}
+                            result["title"] = node.get("title", "")
+                            result["conditions"] = node.get("conditions", "")
+                            result["type"] = node.get("type", "")
+                            result["dialog_node"] = node.get("dialog_node", "")
                             result["skill_id"] = skill_id
                             result["matched_in"] = key 
                             result["matched_location"] = str(match.regs[0])
+                            if "." in key:
+                                # for nested keys, e.g. output.text.values, create a first level attribute "output.text.values"
+                                result[key] = value
+                            elif key not in ["dialog_node", "type", "title", "conditions"]:
+                                #required otherwise the parsing into dataframe will fail
+                                result[key] = ""
                             results.append(result)
-        
-        df = pd.DataFrame(columns=["skill_id", "dialog_node", "type", "title", "conditions", "matched_in","matched_location"])
+
+        df = pd.DataFrame(columns=columns)
         df = df.append(pd.DataFrame(results))
         
-        return df[["skill_id", "dialog_node", "type", "title", "conditions", "matched_in","matched_location"]]
+        return df[columns]
+
+    def to_milestone_dict(self, search_results_df, prefered_milestone_labels):
+        """converts a search result into a milestone dictionary, that can be used in a milestone chart
+        
+        Parameters:
+        search_results_df (DataFrane): The result of calling re_search_in_dialog_nodes
+        prefered_milestone_labels (string[]): a list of columns from which to take the label.  The first one with a non empty value will be used
+        
+        Returns:
+        Dict: a mapping from node --> milestone label
+        """
+        def determine_milestone(row):
+            milestone_label = ""
+            for column in prefered_milestone_labels:
+                milestone_label = row[column]
+                if len(milestone_label) > 0:
+                    break;
+            return milestone_label
+        search_results_df['milestones'] = search_results_df.apply(determine_milestone, axis = 1) 
+        df = search_results_df[["dialog_node", "milestones"]]
+        df = df.set_index("dialog_node")
+        return df.to_dict(orient='dict')["milestones"]
