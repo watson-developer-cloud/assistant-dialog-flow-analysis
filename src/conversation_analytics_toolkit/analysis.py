@@ -17,15 +17,18 @@ import pandas as pd
 import numpy as np
 import json
 import conversation_analytics_toolkit as cat
-from pandas.io.json import json_normalize
+#from pandas.io.json import json_normalize
+from pandas import json_normalize
 
 class _conversationPathAnalysis:
-    def __init__(self, mode, on_column, max_depth, trim_reroutes):
+    def __init__(self, mode, on_column, max_depth, trim_reroutes, silent_mode=False):
         self.mode = mode
         self.on_column = on_column
         self.max_depth = max_depth
         self.trim_reroutes = trim_reroutes
         self.nodes_paths = defaultdict(list)
+        self.warning_message = ""
+        self.silent_mode = silent_mode
 
     def handle_node_row(self, path, row, step, is_conversation_start, path_length):
         if not path in self.nodes_paths:
@@ -67,7 +70,8 @@ class _conversationPathAnalysis:
                         # note this will never happen if trim_reroutes=False
                         break
                 else:
-                    print("reached depth limit of " + str(i-1) + ", ignoring steps beyond.  You can set max_depth to a larger number")
+                    self.warning_message = "reached depth limit of " + str(i-1) + ", ignoring steps beyond.  You can set max_depth to a larger number"
+                    #print("reached depth limit of " + str(i-1) + ", ignoring steps beyond.  You can set max_depth to a larger number")
                     self.handle_conversation_node_exit(prev_node_path, i-1, row)
                     break
             prev_node_path = curr_node_path
@@ -77,7 +81,7 @@ class _conversationPathAnalysis:
 
 class DialogNodesGraph(): 
     # compute visits in dialog nodes
-    def __init__(self, workspace, description=""):
+    def __init__(self, workspace, description="", silent_mode=False):
         self.steps = None
         df_workspace = json_normalize(workspace)
         # dataframe representation of the workspace
@@ -92,6 +96,7 @@ class DialogNodesGraph():
         self.nodes_visited_graph = {}
         # map of conversations and their steps
         self.conversation_steps = {}
+        self.silent_mode = silent_mode
 
     def _get_node(self, node_id):
         return self.dialog_nodes[self.dialog_node_index[node_id]]
@@ -118,6 +123,8 @@ class DialogNodesGraph():
                 graph[node]['prev'][prev_node]['visits']+=1
     
     def _slider_update(self, slider, step, step_desc, step_message = None):
+        if self.silent_mode == True:
+            return
         width = 90
         prefix = ""
         long_message = prefix + step_desc + '.' * (width - len(step_desc) - len(prefix))
@@ -133,10 +140,11 @@ class DialogNodesGraph():
             self.steps = self.steps.append(logs)
         conversations_grouped =  logs.groupby("conversation_id")
         from tqdm import tqdm, tqdm_notebook
-        if cat.use_widgets():
-            slider = tqdm_notebook(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=900)
-        else:
-            slider = tqdm(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=90)
+        if self.silent_mode == False:
+            if cat.use_widgets():
+                slider = tqdm_notebook(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=900)
+            else:
+                slider = tqdm(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=90)
         i=0
         for conversation, steps_df in conversations_grouped:
             i +=1
@@ -243,7 +251,7 @@ class MilestoneFlowGraph:
     # { funnels: funnels --> [m1, m2]} 
     # { mappings: node --> milestone}
     # compute visits in dialog nodes
-    def __init__(self, workspace):
+    def __init__(self, workspace, silent_mode=False):
         #map of milestones
         self.milestones = {}
         #map of funnels, initialized default
@@ -259,6 +267,7 @@ class MilestoneFlowGraph:
         for i, element in enumerate(self.dialog_nodes):
             node_id = element["dialog_node"]
             self.dialog_node_index[node_id] = i
+        self.silent_mode = silent_mode
 
     def add_milestones(self, names, funnel="default", atIndex=None):
         # add milestone, warn if already exists
@@ -270,9 +279,10 @@ class MilestoneFlowGraph:
         return
 
     def add_milestone(self, name, funnel="default", atIndex=None):
-        # add milestone, warn if already exists
+        # add milestone, if not exist already
         if name in self.milestones:
-            print("warning: milestone '{}' is already defined".format(name))
+            return
+            #print("warning: milestone '{}' is already defined".format(name))
         if atIndex==None:
             atIndex = len(self.funnels[funnel])
         self.funnels[funnel].insert(atIndex, name)
@@ -308,12 +318,15 @@ class MilestoneFlowGraph:
         # take original data, for every nodes_visited, check if one has milestone def, enrich milestone
         # add column: milestone, funnels, 
         df_logs['milestone'] = None
+        slider = None
         conversations_grouped =  df_logs.groupby("conversation_id")
+        
         from tqdm import tqdm, tqdm_notebook
-        if cat.use_widgets():
-            slider = tqdm_notebook(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=900)
-        else:
-            slider = tqdm(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=900)
+        if self.silent_mode == False:
+            if cat.use_widgets():
+                slider = tqdm_notebook(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=900)
+            else:
+                slider = tqdm(range(100), desc="processing {} conversations".format(len(conversations_grouped)), ncols=900)
         i=0
         #for each conversation 
         for conversation, steps_df in conversations_grouped:
@@ -338,6 +351,8 @@ class MilestoneFlowGraph:
         self._slider_update(slider, 100, "Processed {} conversations".format(i))
                           
     def _slider_update(self, slider, step, step_desc, step_message = None):
+        if self.silent_mode == True:
+            return
         width = 90
         prefix = ""
         long_message = prefix + step_desc + '.' * (width - len(step_desc) - len(prefix))
@@ -370,14 +385,16 @@ def compute_flows(df, config):
     for idx, conversation_df in df.groupby(df['conversation_id']):
         conversation_df = conversation_df.sort_values("response_timestamp")
         analysis.handle_conversation_path(conversation_df)
-
+        
+    if len(analysis.warning_message) > 0:
+        print(analysis.warning_message)
     df_node_out = pd.DataFrame.from_dict(analysis.nodes_paths, orient="index")
     df_node_out.reset_index(inplace=True)
     df_node_out.rename(columns={'index':'path'}, inplace=True)
 
     return pd.concat([df_node_out])[['path','name','type','is_conversation_start','flows','rerouted','dropped_off','conversation_log_ids_rerouted','conversation_log_ids_dropped_off','path_length']]
 
-def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label", trim_reroutes=False, reverse=False ):
+def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label", trim_reroutes=False, reverse=False, silent_mode=False):
     """
     compute aggregated flows across nodes and corresponding statistics, such as number of dropoffs
     returns results as a df for visualization
@@ -396,11 +413,12 @@ def aggregate_flows(df, max_depth=30, mode="turn-based", on_column="turn_label",
         if column not in df.columns.values:
             raise Exception("input data is missing mandatory column: " + column)
 
-    analysis = _conversationPathAnalysis(mode, on_column, max_depth, trim_reroutes)
+    analysis = _conversationPathAnalysis(mode, on_column, max_depth, trim_reroutes, silent_mode)
     for idx, conversation_df in df.groupby(df['conversation_id']):
         conversation_df = conversation_df.sort_values("response_timestamp", ascending=not reverse)
         analysis.handle_conversation_path(conversation_df)
-
+    if len(analysis.warning_message) > 0:
+        print(analysis.warning_message)
     df_node_out = pd.DataFrame.from_dict(analysis.nodes_paths, orient="index")
     df_node_out.reset_index(inplace=True)
     df_node_out.rename(columns={'index':'path'}, inplace=True)
