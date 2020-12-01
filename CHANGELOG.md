@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.4.0...v1.5.0) (2020-12-01)
+
+
+### Features
+
+* implemented capability to semi automatically create a milestone chart based on regular expression search in the workspace ([a28f27b](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/a28f27b38f1aa02c6fccc5f73be2186b0eaa4e67))
+
 # [1.4.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.3.0...v1.4.0) (2020-11-24)
 
 
