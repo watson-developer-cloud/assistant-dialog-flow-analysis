@@ -1,3 +1,15 @@
+## [1.5.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.5.0...v1.5.1) (2021-01-04)
+
+
+### Bug Fixes
+
+* handle empty nodes_visited in WAVI logs ([2a46d4d](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/2a46d4dea2fb739abb870336a3d16fdaf0af5285))
+* limit scipy version to 1.5.3 to support Python 3.6 ([3c6bf47](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/3c6bf476ddf394095ce361cdff93b5827647fe0a))
+* remove scipy from the dependency list to solve Python 3.6 installation issue ([e22ef6b](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/e22ef6b44602ebbb657419491397531ac6545236))
+* remove support for Python 3.6 as TOX fails to install it due to scipy 1.5.4 dependency which is not supported any more for Python 3.6 ([62017e2](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/62017e2213ef82bef902ac27b225c74e720094be))
+* support for python 3.8/3.9 ([1d709fe](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/1d709fee0a0f72b9ffed2571b9a7b8767ecace36))
+* support for python 3.8/3.9 ([73d1893](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/73d1893448fa50b60cb5feb431e0cd577b3ed78d))
+
 # [1.5.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.4.0...v1.5.0) (2020-12-01)
 
 
