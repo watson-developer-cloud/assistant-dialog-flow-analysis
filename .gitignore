@@ -25,6 +25,7 @@ dist/
 logs_from_json_to_df_2.csv
 #python virtual environments
 .py36/
+.py37/
 .py27/
 _creds.py
 node_modules/
