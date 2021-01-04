@@ -184,6 +184,9 @@ def extract_turn_label(row, wa_skills, errors, mode="last_standard", match_from_
     returns a string representation the most significant information in the turn
     mode="last_standard" will seek for the last standard node, and try to extract a meaningful name from it
     """
+
+    if (not 'nodes_visited' in row) or (len(row["nodes_visited"]) == 0): 
+        return "NODES_VISITED_EMPTY"
     #initialize with last node_id
     result=row['nodes_visited'][-1]
     for node_id in reversed(row['nodes_visited']):
