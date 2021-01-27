@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.5.1...v1.6.0) (2021-01-27)
+
+
+### Features
+
+* added consecutive filtering ([30f0c0e](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/30f0c0e4f2ae163dffea44f78680b9fa9c38c42c))
+
 ## [1.5.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.5.0...v1.5.1) (2021-01-04)
 
 
