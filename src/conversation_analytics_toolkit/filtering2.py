@@ -361,3 +361,33 @@ class ChainFilter():
         duration_sec = int(later - now)
         self._append_filter(filtered_df, "by_column_values (" + column_name + ': ' + str(values) + ")", duration_sec)
         return self
+
+    def by_consecutive_values(self, feature, feature_type, feature_values):
+        now = time.time()  
+        self.df = self.df.sort_values(['conversation_id','response_timestamp'])
+        self.df["prev_conversation_id"] = self.df.conversation_id.shift(1)
+        if feature_type == "cat": 
+            self.df["prev_feature"] = self.df[feature].shift(1)
+            conv_id = self.df[(self.df[feature]==feature_values[1])&(self.df["prev_feature"]==feature_values[0])&\
+                        (self.df.conversation_id==self.df.prev_conversation_id)].conversation_id.unique()
+            del self.df["prev_feature"] 
+        elif feature_type == "text":
+            self.df["clean_text"] = self.df.apply (lambda row: clean_text(row[feature]), axis=1)
+            self.df["prev_clean_text"] =  self.df["clean_text"].shift(1) 
+
+            conv_id = self.df[(self.df["clean_text"].str.contains(feature_values[1]))&\
+                (self.df["prev_clean_text"].str.contains(feature_values[0]))&\
+                (self.df.conversation_id==self.df.prev_conversation_id)].conversation_id.unique()
+            del self.df['clean_text']
+            del self.df["prev_clean_text"]
+        else:
+            print("Error! Unknown feature type.")
+            return self
+        
+        del self.df["prev_conversation_id"] 
+        
+        filtered_df = self.df[self.df.conversation_id.isin(conv_id)]
+        later = time.time()
+        duration_sec = int(later - now)
+        self._append_filter(filtered_df, "by_consecutive_values (" + str(feature) + " : " + str(feature_values) + ")", duration_sec)
+        return self
