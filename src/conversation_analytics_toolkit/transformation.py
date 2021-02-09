@@ -163,7 +163,7 @@ def extract_best_label(node, include_type=True):
         else:
             return "?"
     except Exception as e:
-        print("node label could not be resolved for ", e)
+        #print("node label could not be resolved for ", e)
         return "?" 
 
 def node_visited_to_str(row, wa_skills, include_node_visited_to_str):
