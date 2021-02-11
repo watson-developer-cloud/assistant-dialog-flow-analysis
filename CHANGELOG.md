@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.6.0...v1.6.1) (2021-02-11)
+
+
+### Bug Fixes
+
+* empty commit - just to trigger a release ([370a124](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/370a124faebeeb21db17f17d58de6ab2cb954194))
+
 # [1.6.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.5.1...v1.6.0) (2021-01-27)
 
 
