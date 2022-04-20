@@ -370,6 +370,9 @@ def to_canonical_WA_v2(df, wa_skills=None, skill_id_field=None, include_nodes_vi
     df5['event_type'] = "REQUEST_REPONSE"
     #df5['skill_id'] = pd.DataFrame(df[skill_id_field].to_list())
     
+    #FIX 20-04-2022 in disambiguation records, nodes_visited will be NaN (type float) therefore we currently set special value in these cases
+    df5["nodes_visited"] = df5["nodes_visited"].apply(lambda x: ['_DISAMBIGUATION_'] if isinstance(x, float) else x)
+
     errors = {
         "skills_not_found": set(),
         "nodes_not_found": set()
