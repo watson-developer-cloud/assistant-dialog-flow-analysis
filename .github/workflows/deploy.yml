@@ -7,10 +7,6 @@
 name: Deploy and Publish
 
 on:
-  pull_request:
-  # Sequence of patterns matched against refs/heads
-    branches:
-      - master
   push:
     branches:
        - master
@@ -45,7 +41,6 @@ jobs:
         run: |
           pytest
   deploy:
-    if: github.event.pull_request.merged == true
     name: Deploy and Publish
     runs-on: ubuntu-latest
 
