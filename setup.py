@@ -11,7 +11,7 @@ import re
 import os
 from os import path
 
-__version__ = '1.6.1'
+__version__ = '1.7.0'
 
 # Save __version__ and author to __meta__.py
 dirname = os.path.dirname(__file__)
