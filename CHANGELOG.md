@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.7.0...v1.8.0) (2022-05-05)
+
+
+### Features
+
+* github actions ([a7bf34d](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/a7bf34d91a783e15965099187641740b6275d8d5))
+
 # [1.7.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.6.1...v1.7.0) (2022-05-05)
 
 
