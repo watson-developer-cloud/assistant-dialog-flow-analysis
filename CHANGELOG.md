@@ -1,3 +1,11 @@
+## [1.8.2](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.8.1...v1.8.2) (2022-05-09)
+
+
+### Bug Fixes
+
+* semantic release pypi ([d81a062](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/d81a06201e3dec8def577ad1a3fa8e54b77b7d33))
+* semantic release pypi ([7893d69](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/7893d69b868d84ee6c9fc83e6b74565fd0d85273))
+
 ## [1.8.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.8.0...v1.8.1) (2022-05-09)
 
 
