@@ -46,7 +46,6 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as file:
 setuptools.setup(
     # Basic info
     name='conversation_analytics_toolkit',
-    version=__version__,
     author='IBM Watson',
     author_email='watdevex@us.ibm.com',
     maintainer='Avi Yaeli',
