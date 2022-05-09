@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.8.0...v1.8.1) (2022-05-09)
+
+
+### Bug Fixes
+
+* remove version variable ([ceacb43](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/ceacb4384631acd4a2a8dc7319153e6d6b7d1a93))
+
 # [1.8.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.7.0...v1.8.0) (2022-05-05)
 
 
