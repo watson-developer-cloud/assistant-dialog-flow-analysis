@@ -1,3 +1,42 @@
+# [1.8.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.7.0...v1.8.0) (2022-05-05)
+
+
+### Features
+
+* github actions ([a7bf34d](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/a7bf34d91a783e15965099187641740b6275d8d5))
+
+# [1.7.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.6.1...v1.7.0) (2022-05-05)
+
+
+### Bug Fixes
+
+* actions ([5078ea0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/5078ea0dfc8dbe0b1b6dbd68da9c63c18e8f296c))
+* actions ([5fc809d](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/5fc809d44e4021404e62b4156d2320e3fbb8eb20))
+* actions ([f6b9cd8](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/f6b9cd8b480a710b892451cd8ca77658856c9420))
+* actions ([0efd8e5](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/0efd8e50c70100cc282200dbb2325e3bbbbea28e))
+* actions ([ea36a6b](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/ea36a6b13c3e2535e238df1e44209ffdfea060eb))
+* actions ([5dc14e3](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/5dc14e33204fd5b71108a98448cf50be847e274e))
+* actions ([816485e](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/816485ecadb2883e208cbd12b4a311297bf44de8))
+* actions ([d6e2a44](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/d6e2a4421adaedb2c4a33d17d2e973182d915814))
+* actions ([d269022](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/d26902282cbd6f511aa572e00c529752c5ee4f6a))
+* actions ([abcaa15](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/abcaa15a544414fb7646853770f4510fc0e3e2cf))
+* actions ([5a8c93a](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/5a8c93a0577e9823564f49a3120d6ecd063b5487))
+* actions ([475871f](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/475871fe65130eead9590afa154c8278243db8a3))
+* actions ([723fbb1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/723fbb154e9c5739e9a83ca9b9cbded82a5664aa))
+* actions ([1087a52](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/1087a52ea063eaf3e2c6d86629f10f1de96bbbe9))
+* actions ([52f6fea](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/52f6fea3967ab8ea60720c7222fe8b4bc69cdc59))
+* disambiguation log records produced parsing error ([6014daa](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/6014daa8ab6fed751fba4a0f10b691d347de3181))
+
+
+### Features
+
+* github actions ([e6c5e00](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/e6c5e00a51fe78b1c49562272e2c90101ef234d3))
+* github actions ([a1e2416](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/a1e24168c6049590df8483f8072f9035e123c84e))
+* github actions ([d33d154](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/d33d154b3d1419f3be816bb7e01323cf8409b12b))
+* github actions ([9805f21](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/9805f21816d7a16ca8710d6edc142029070a2c91))
+* github actions ([64f0953](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/64f0953480ac2e825421971074c367f1b22bab48))
+* github actions ([b2cc663](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/b2cc663f2d2a4fe7e7886096289796091af4c5dd))
+
 ## [1.6.1](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.6.0...v1.6.1) (2021-02-11)
 
 
