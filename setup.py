@@ -74,7 +74,7 @@ setuptools.setup(
         'pandas>=1.1.0',
         'nltk>=3.4.0',
         'textblob>=0.15.3',
-        'scipy>=1.3.0,<1.5.3',
+        # 'scipy>=1.3.0,<1.5.3',
         'scikit-learn>=0.21.3',
         'tqdm>=4.31.1',
         'ipywidgets>=7.4.2',
