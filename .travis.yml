@@ -4,7 +4,7 @@ python:
 - 3.8
 cache: pip
 before_install:
-#- python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
+#- python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)" 
 - npm install npm@latest -g
 install:
 - pip3 install tox-travis
