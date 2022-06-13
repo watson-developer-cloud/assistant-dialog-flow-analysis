@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.8.2...v1.8.3) (2022-06-13)
+
+
+### Bug Fixes
+
+* removed scipy dependency which caused an error during pip install ([0bd3169](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/0bd316937f3e5ed24e4514e3f994692fa6b9f947))
+
 ## [1.8.2](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.8.1...v1.8.2) (2022-05-09)
 
 
