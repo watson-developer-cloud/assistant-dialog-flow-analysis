@@ -579,3 +579,23 @@ def _extract_dialog_node_name(dialog_nodes):
         else:
             nodes_dict[obj['dialog_node']] = (obj['dialog_node'],obj['type'])
     return nodes_dict
+
+def collect_option_response_text(dialog_nodes, target_nodes):
+    """
+    Replace empty response text with node options when response_type == "options"
+    """
+    response_text = []
+
+    for target in target_nodes:
+        for node in dialog_nodes:
+            if (
+                node.get("dialog_node", "") == target
+                and "output" in node
+                and "generic" in node["output"]
+            ):
+                for item in node["output"]["generic"]:
+                    if item["response_type"] == "option":
+                        for option in item["options"]:
+                            response_text.append(option["value"]["input"]["text"])
+
+    return response_text
