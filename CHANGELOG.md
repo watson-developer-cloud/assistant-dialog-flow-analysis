@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.8.3...v1.9.0) (2022-11-14)
+
+
+### Features
+
+* add option to fill response_text with node options for response_type == "options" ([19f943d](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/commit/19f943d1a78e8beacf2c9fa714beed3ddea0e8e0))
+
 ## [1.8.3](https://github.com/watson-developer-cloud/assistant-dialog-flow-analysis/compare/v1.8.2...v1.8.3) (2022-06-13)
 
 
